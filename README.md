@@ -17,6 +17,16 @@ git --version
 ```
 
 Now you are ready to launch Alchemist & ScaFi simulations
+
+## Executing simulations
+
+```
+java 
+  -classpath ./build/classes/scala/main:./build/resources/main:~/.gradle/caches/modules-2/files-2.1/it.unibo.alchemist/alchemist/25.12.0/bc713208ced9b147d6a41ea346c1fbd2ef10b90f/alchemist-25.12.0.jar:... it.unibo.alchemist.Alchemist -y src/main/yaml/pattern_event_triggering.yml -g src/main/resources/pattern-event-triggering.json
+```
+
+# Guide
+
 ## Quickstart
 
 Open a terminal and run:
