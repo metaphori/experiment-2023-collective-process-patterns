@@ -9,10 +9,11 @@ variables:
 
 _constants:
   connectionRange: &connectionRange 100
-  retentionTime: &retentionTime 5.0
-  programRate: &programRate 1.0
-  movementRate: &movementRate 10.0
-  movementSpeed: &movementSpeed 50.0
+  retentionTime: &retentionTime 2.0
+  programRateMax: &programRateMin 1.0
+  programRateMin: &programRateMax 1.5
+#  movementRate: &movementRate 10.0
+#  movementSpeed: &movementSpeed 50.0
   exportInterval: &exportInterval 3.0
   proces: &procs "scala.collection.Map(0 -> (0,50), 20 -> (1,100), 30 -> (390,50), 25 -> (190, 35), 80 -> (380, 85))"
 
@@ -31,19 +32,20 @@ network-model:
 _reactions:
   - program: &program
       - time-distribution:
-          type: ExponentialTime # DiracComb
-          parameters: *programRate
+          type: ExponentialTime # RandomDiracComb # ExponentialTime
+          # NB: the interplay between extreme asynchronicity and retention may cause process re-entrance, i.e., failure in process termination
+          parameters: *programRateMin # [*programRateMin, *programRateMax] # *programRate
         type: Event
         actions:
           - type: RunScafiProgram
             parameters: [it.unibo.cpatterns.EventTriggering, *retentionTime]
       - program: send
-  - move: &move
-      - time-distribution: *movementRate
-        type: BlendedSteering
-        actions:
-          - type: MoveToTarget
-            parameters: [ target, *movementSpeed ]
+#  - move: &move
+#      - time-distribution: *movementRate
+#        type: BlendedSteering
+#        actions:
+#          - type: MoveToTarget
+#            parameters: [ target, *movementSpeed ]
 
 deployments:
   type: Grid
@@ -51,7 +53,7 @@ deployments:
   properties:
     - type: Pedestrian
   programs:
-    - *move
+#    - *move
     - *program
   contents:
     - molecule: test
