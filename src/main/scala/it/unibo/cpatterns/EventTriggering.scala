@@ -9,7 +9,8 @@ class EventTriggering extends SimulatedAggregateProgram {
   lazy val eventDetector = alchemistRandomGen.nextGaussian() > 2
   lazy val eventHandler = alchemistRandomGen.nextGaussian() > 1.5
 
-  val BUBBLE_RADIUS = 100
+  val BUBBLE_RADIUS = 200
+  val HANDLING_BUBBLE_RADIUS = 100
 
   val BUBBLE_DURATION_ROUNDS = 15
   val HANDLING_BUBBLE_DURATION_ROUNDS = 30
@@ -38,7 +39,7 @@ class EventTriggering extends SimulatedAggregateProgram {
       val g = distanceTo(source)
       node.put(s"${e}_g", g)
       val status = if(source && t >= HANDLING_BUBBLE_DURATION_ROUNDS) Terminated
-        else if(g < BUBBLE_RADIUS && t < HANDLING_BUBBLE_DURATION_ROUNDS) Output
+        else if(g < HANDLING_BUBBLE_RADIUS && t < HANDLING_BUBBLE_DURATION_ROUNDS) Output
         else External
       POut((), status)
     }
