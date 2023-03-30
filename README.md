@@ -2,6 +2,19 @@
 
 This tutorial presents a sequence of increasingly rich examples using the [Scafi aggregate programming DSL](https://scafi.github.io) and [the Alchemist Simulator](https://alchemistsimulator.github.io/).
 
+## TLDR
+
+Executing patterns:
+
+```bash
+$ ./gradlew runPattern_prolonged_termination
+```
+
+Tasks/patterns:
+
+- `runPattern_event_triggering`
+- `runPattern_prolonged_termination`
+
 ## Requirements
 
 - A [Gradle-compatible Java version](https://docs.gradle.org/current/userguide/compatibility.html) e.g., [temurin](https://adoptium.net/temurin/releases/)
