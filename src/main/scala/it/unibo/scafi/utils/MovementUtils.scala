@@ -11,6 +11,39 @@ trait MovementUtils {
     node.put(molecule, ifClose(cropRectangle(goal, p1, p2)))
   }
 
+  object D extends Enumeration {
+    type CardinalPoint = Value
+
+    val N = Value("North")
+    val E = Value("East")
+    val S  = Value("South")
+    val W = Value("West")
+    val NE = ValueSet(N, E)
+    val NW = ValueSet(N, W)
+    val SE = ValueSet(S, E)
+    val SW = ValueSet(S, W)
+
+  }
+
+  def direction(curr: Point2D,
+                p1: Point2D = Point2D(0,0),
+                p2: Point2D = Point2D(1000,1000),
+                molecule: String = "target",
+                direction: D.Value = D.N,
+                hstep: Double = 1.0,
+                vstep: Double = 1.0): Unit = {
+    val goal = Point2D(curr.x + (direction match {
+      case D.E => -hstep
+      case D.W => hstep
+      case _ => 0
+    }), curr.y + (direction match {
+      case D.N => vstep
+      case D.S => -vstep
+      case _ => 0
+    }))
+    node.put(molecule, ifClose(cropRectangle(goal, p1, p2)))
+  }
+
   def cropRectangle(goal: Point2D, rect1: Point2D, rect2: Point2D): Point2D = {
     Point2D(if(goal.x < rect1.x) rect1.x else if(goal.x > rect2.x) rect2.x else goal.x,
       if(goal.y < rect1.y) rect1.y else if(goal.y > rect2.x) rect2.y else goal.y)
