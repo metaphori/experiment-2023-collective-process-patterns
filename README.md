@@ -1,6 +1,14 @@
 # Patterns of Decentralised Collective Processes
 
+# More examples
 
+## Multigradient
+
+Run: `/.gradlew runMultigradient`
+
+- You should see that different "bubbles" are created, each one denoting a different gradient process, with a different source and extension. After t=600 all processes should quit.
+- File `src/yaml/multigradient.yml` let you specify in constant `procs` the gradient to be spawned: the map contains entries of the format
+    - `deviceId -> (startTime,endTime,extension)`: it means that device `deviceId` will become a source of a gradient from `startTime` to `endTime`, and the process will have a radius of `extension`.
 
 # Simulations with Alchemist and Scafi: tutorial
 
