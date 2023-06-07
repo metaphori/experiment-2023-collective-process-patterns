@@ -25,23 +25,6 @@ class ProlongedTermination extends SimulatedAggregateProgram {
       (Return(!source && wannaTerminate), status)
     }
 
-    /*
-    def prolongedTermination[K,A,R](process: K => A => (R, Boolean))(nullReturn: => R): K => A => (R, Boolean) = {
-      rep[Map[Pid,Return]](Map.empty)( oldMap => {
-        val proscription = oldMap.filter(_._2.terminate)
-        spawnWithProscription(proscription.keySet)
-      }).filter(!_._2.terminate)
-      val proscription: Set[K] = ???
-      (k: K) => (a: A) => {
-        branch(proscription.contains(k)) {
-          (nullReturn, false)
-        } {
-          process(k)(a)
-        }
-      }
-    }
-     */
-
     val generator = mid() % 25 == 0;
 
     val proscription = rep[Set[Pid]](Set.empty)(proscription => {

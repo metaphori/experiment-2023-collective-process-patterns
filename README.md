@@ -1,3 +1,7 @@
+# Patterns of Decentralised Collective Processes
+
+
+
 # Simulations with Alchemist and Scafi: tutorial
 
 This tutorial presents a sequence of increasingly rich examples using the [Scafi aggregate programming DSL](https://scafi.github.io) and [the Alchemist Simulator](https://alchemistsimulator.github.io/).
