@@ -24,19 +24,22 @@ class MovingProcess extends SimulatedAggregateProgram {
     }
     val inPathFromTargetToCentre = args.dependentNodes.contains(msg.to)
     val inRegion = inPathFromSrcToCentre || inPathFromTargetToCentre
+    val gotMsg = broadcast(mid() == msg.to, mid() == msg.to)
+    val actuallyInRegion =
+      !gotMsg & inPathFromSrcToCentre & excludingSelf.anyHood { nbr{inPathFromSrcToCentre} & nbr{args.dependentNodes}.contains(mid()) } |
+      gotMsg & inPathFromTargetToCentre & excludingSelf.anyHood{ nbr(inPathFromTargetToCentre) & args.dependentNodes.contains(nbr(mid())) } |
+        inRegion
 
-    val status: Status = branch(mid() == msg.to) {
-      mux[Status](rep(0)(_ + 1)==1) { Output } { Output /* Terminated */ }
-    } { if (inRegion) { Output } else { External } }
+    val status: Status = if(gotMsg && mid() == msg.from) Terminated else if (actuallyInRegion) { Output } else { External }
 
     (s"${msg.from}->${msg.to}", status)
   }
 
   def chat(centre: ID, pids: Set[Pid]) = {
-    val (distToCentre, parentToCentre) = distanceToWithParent(centre == mid)
+    val (distToCentre, parentToCentre) = distanceToWithParent(centre == mid())
 
     val dependentNodes = rep(Set.empty[ID]){ case (s: Set[ID]) =>
-      excludingSelf.unionHoodSet[ID](mux( nbr{parentToCentre}==mid ){ nbr(s) }{ Set.empty[ID] }) + mid
+      excludingSelf.unionHoodSet[ID](mux( nbr{parentToCentre} == mid() ){ nbr(s) }{ Set.empty[ID] }) + mid()
     } // set of nodes whose path towards gen passes through me
 
     node.put("g", distToCentre)
@@ -61,10 +64,10 @@ class MovingProcess extends SimulatedAggregateProgram {
   def distanceToWithParent(source: Boolean): (Double, ID) = {
     rep((Double.PositiveInfinity, -1)){ case (dist, parent) =>
       mux(source){
-        (0.0, mid)
+        (0.0, mid())
       }{
         excludingSelf.minHoodSelector(nbr{dist} + nbrRange()){
-          (nbr{dist}+nbrRange(), nbr{mid})
+          (nbr{dist} + nbrRange(), nbr {mid()})
         }.getOrElse((Double.PositiveInfinity, -1))
       }
     }
