@@ -1,5 +1,14 @@
 # Patterns of Decentralised Collective Processes
 
+## Space-attached process
+
+Simple version: `./gradlew runPattern_space_attached_process_simple`
+
+Complete version:  `./gradlew runPattern_space_attached_process`
+
+- Two space-attached processes are spawned. Devices with even ID are instructed to move from the left to right of the arena. 
+- What can be seen is that the process remains located there and only the devices that remain fixed continue to run it.
+
 # More examples
 
 ## Multigradient

@@ -2,6 +2,7 @@ package it.unibo.cpatterns
 
 import it.unibo.alchemist.model.scafi.ScafiIncarnationForAlchemist._
 import it.unibo.scafi.utils.MovementUtils
+import org.apache.commons.math3.random.RandomGenerator
 
 trait SimulatedAggregateProgram extends AggregateProgram
   with StandardSensors
@@ -13,7 +14,6 @@ trait SimulatedAggregateProgram extends AggregateProgram
 
   def broadcastAlong[T](g: Double, v: T): T =
     G_along[T](g, nbrRange, v, x => x)
-
 
   override def sspawn[K, A, R](process: K => A => POut[R], params: Set[K], args: A): Map[K,R] =
     spawn2[K,A,Option[R]](k => a => handleOutput(handleTermination(process(k)(a))), params, args)
