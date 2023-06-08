@@ -37,14 +37,8 @@ _reactions:
         type: Event
         actions:
           - type: RunScafiProgram
-            parameters: [it.unibo.cpatterns.MovingProcess, *retentionTime]
+            parameters: [it.unibo.simulations.Chat, *retentionTime]
       - program: send
-#  - move: &move
-#      - time-distribution: *movementRate
-#        type: BlendedSteering
-#        actions:
-#          - type: MoveToTarget
-#            parameters: [ target, *movementSpeed ]
 
 deployments:
   type: Grid

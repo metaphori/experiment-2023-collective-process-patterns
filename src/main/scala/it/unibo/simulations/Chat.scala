@@ -1,11 +1,8 @@
-package it.unibo.cpatterns
+package it.unibo.simulations
 
 import it.unibo.alchemist.model.scafi.ScafiIncarnationForAlchemist._
-import it.unibo.scafi.space.Point2D
-import it.unibo.scafi.utils.MovementUtils
-import org.apache.commons.math3.random.RandomGenerator
 
-class MovingProcess extends SimulatedAggregateProgram {
+class Chat extends SimulatedAggregateProgram {
   import SpawnInterface._
 
   case class Pid(from: ID, to: ID, at: Long)
@@ -26,13 +23,13 @@ class MovingProcess extends SimulatedAggregateProgram {
     val inRegion = inPathFromSrcToCentre || inPathFromTargetToCentre
 
     val status: Status = branch(mid() == msg.to) {
-      mux[Status](rep(0)(_ + 1)==1) { Output } { Output /* Terminated */ }
+      mux[Status](rep(0)(_ + 1)==1) { Output } { Terminated }
     } { if (inRegion) { Output } else { External } }
 
     (s"${msg.from}->${msg.to}", status)
   }
 
-  def chat(centre: ID, pids: Set[Pid]) = {
+  def chat(centre: ID, pids: Set[Pid]): Map[Pid,String] = {
     val (distToCentre, parentToCentre) = distanceToWithParent(centre == mid)
 
     val dependentNodes = rep(Set.empty[ID]){ case (s: Set[ID]) =>
@@ -58,13 +55,14 @@ class MovingProcess extends SimulatedAggregateProgram {
     node.put("numPids", maps.size)
   }
 
+
   def distanceToWithParent(source: Boolean): (Double, ID) = {
     rep((Double.PositiveInfinity, -1)){ case (dist, parent) =>
       mux(source){
         (0.0, mid)
       }{
-        excludingSelf.minHoodSelector(nbr{dist} + nbrRange()){
-          (nbr{dist}+nbrRange(), nbr{mid})
+        excludingSelf.minHoodSelector(nbr{dist}+nbrRange()){
+          (nbr{dist}+nbrRange(),nbr{mid})
         }.getOrElse((Double.PositiveInfinity, -1))
       }
     }
