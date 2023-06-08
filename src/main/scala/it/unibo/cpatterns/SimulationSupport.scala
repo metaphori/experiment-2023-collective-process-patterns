@@ -75,4 +75,14 @@ trait SimulatedAggregateProgram extends AggregateProgram
     }._3
   }
   */
+
+  def gossip[T](value: T, combine: (T,T) => T) = rep(value)(curr => foldhood(curr)(combine){ nbr(value) })
+
+  def chooseOneAndKeep[T](rg: RandomGenerator, ts: T*): T = rep(Option.empty[T])(chosen => {
+    chosen.orElse(Some(ts(rg.nextInt(ts.length))))
+  }).get
+
+  def chooseOneAndKeepForTime[T](rg: RandomGenerator, duration: Int, ts: T*): T = rep((Option.empty[(T,Long)]))(chosen => {
+    chosen.filter(c => timestamp() - c._2 < duration).orElse(Some(ts(rg.nextInt(ts.length)), timestamp()))
+  }).get._1
 }

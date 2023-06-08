@@ -1,11 +1,6 @@
 package it.unibo.cpatterns
 
-import it.unibo.alchemist.model.scafi.ScafiIncarnationForAlchemist._
-import it.unibo.scafi.utils.MovementUtils
-
-class NodeAttachedProcess extends AggregateProgram with StandardSensors with ScafiAlchemistSupport
-  with CustomSpawn with BlockG with Gradients with MovementUtils {
-  import SpawnInterface._
+class NodeAttachedProcess extends SimulatedAggregateProgram {
 
   /**def removeMolecule(name: String) = if(node.has(name)) node.remove(name)
    * This program realises simple spawning of gradient processes.
@@ -28,7 +23,4 @@ class NodeAttachedProcess extends AggregateProgram with StandardSensors with Sca
     node.put("pids", maps.keySet)
     node.put("numPids", maps.size)
   }
-
-  // TODO: fix remove to perform the check
-  def removeMolecule(name: String) = if(node.has(name)) node.remove(name)
 }

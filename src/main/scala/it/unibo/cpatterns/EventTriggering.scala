@@ -15,7 +15,6 @@ class EventTriggering extends SimulatedAggregateProgram {
   val BUBBLE_DURATION_ROUNDS = 15
   val HANDLING_BUBBLE_DURATION_ROUNDS = 30
 
-
   override def main(): Any = {
     node.put("event-detector", eventDetector)
     node.put("event-handler", eventHandler)
@@ -81,12 +80,10 @@ class EventTriggering extends SimulatedAggregateProgram {
       {})
 
     if (!map.isEmpty) {
-      //println(s"${mid} has map: ${map}")
       node.put("pid", Math.abs(map.maxBy(_._1.handler)._1.hashCode()) % 100)
     } else {
       removeMolecule("pid")
       removeMolecule("g")
     }
   }
-
 }

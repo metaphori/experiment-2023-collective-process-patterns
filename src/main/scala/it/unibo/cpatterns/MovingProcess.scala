@@ -5,7 +5,7 @@ import it.unibo.scafi.space.Point2D
 import it.unibo.scafi.utils.MovementUtils
 import org.apache.commons.math3.random.RandomGenerator
 
-class SpaceAttachedProcess extends SimulatedAggregateProgram {
+class MovingProcess extends SimulatedAggregateProgram {
 
   case class Pid(issuer: ID, from: Long, to: Long, x1: Int, y1: Int, x2: Int, y2: Int) {
     def within(p: Point2D): Boolean =
@@ -26,27 +26,15 @@ class SpaceAttachedProcess extends SimulatedAggregateProgram {
    * The "difficult" part lies in controlling the processes' lifecycle.
    */
   override def main(): Any = {
-    val leader = mid() % 33 == 0
-    // val gradient = distanceTo(leader)
-    val carrier = broadcast(leader, mid())
-    var pids: Set[Pid] = Set.empty
-    val carriers = spawn[CarrierPid,Unit,Unit](pid => args => {
-      pids = pids ++ gossip[Set[Pid]](issuing, _++_)
-      ((), leader || pid.leader == carrier)
-    }, if(leader) Set(CarrierPid(mid())) else Set.empty, {})
-    val maps = spawn[Pid,Unit,Unit](pid => args => {
-      ((), pid.within(currentPosition()))
-    }, pids, ())
+    // TODO
 
-    if(!carriers.isEmpty) {
-      node.put("carrier", Math.abs(carriers.maxBy(_._1.leader)._1.hashCode()) % 100)
-    }
+    /*
     if(!maps.isEmpty) {
       node.put("pid", Math.abs(maps.maxBy(_._1.to)._1.hashCode()) % 100)
     } else { removeMolecule("pid"); removeMolecule("g"); }
 
-    direction(currentPosition(), direction = if(mid()%2==0) D.W else D.N, hstep = 10, vstep = 0)
     node.put("pids", maps.keySet)
     node.put("numPids", maps.size)
+     */
   }
 }

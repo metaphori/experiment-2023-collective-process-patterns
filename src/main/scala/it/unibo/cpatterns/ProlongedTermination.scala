@@ -3,7 +3,6 @@ package it.unibo.cpatterns
 import it.unibo.alchemist.model.scafi.ScafiIncarnationForAlchemist._
 
 class ProlongedTermination extends SimulatedAggregateProgram {
-  import SpawnInterface._
 
   lazy val eventDetector = alchemistRandomGen.nextGaussian() > 2
   lazy val eventHandler = alchemistRandomGen.nextGaussian() > 1.5
@@ -37,7 +36,6 @@ class ProlongedTermination extends SimulatedAggregateProgram {
       }, if(generator) Set(Pid(mid())) else Set.empty, Args())
 
       if (!map.isEmpty) {
-        //println(s"${mid} has map: ${map}")
         node.put("pid", map.maxBy(_._1.leader)._1.leader % 100)
       } else {
         removeMolecule("pid")

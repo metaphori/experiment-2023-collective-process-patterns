@@ -5,8 +5,7 @@ import it.unibo.scafi.space.Point2D
 import it.unibo.scafi.utils.MovementUtils
 import org.apache.commons.math3.random.RandomGenerator
 
-class SpaceAttachedProcessSimple extends AggregateProgram with StandardSensors with ScafiAlchemistSupport
-  with CustomSpawn with BlockG with Gradients with MovementUtils {
+class SpaceAttachedProcessSimple extends SimulatedAggregateProgram {
 
   case class Pid(from: Long, to: Long, x1: Int, y1: Int, x2: Int, y2: Int) {
     def within(p: Point2D): Boolean =
@@ -37,15 +36,4 @@ class SpaceAttachedProcessSimple extends AggregateProgram with StandardSensors w
     node.put("pids", maps.keySet)
     node.put("numPids", maps.size)
   }
-
-  // TODO: fix remove to perform the check
-  def removeMolecule(name: String) = if(node.has(name)) node.remove(name)
-
-  def chooseOneAndKeep[T](rg: RandomGenerator, ts: T*): T = rep(Option.empty[T])(chosen => {
-    chosen.orElse(Some(ts(rg.nextInt(ts.length))))
-  }).get
-
-  def chooseOneAndKeepForTime[T](rg: RandomGenerator, duration: Int, ts: T*): T = rep((Option.empty[(T,Long)]))(chosen => {
-    chosen.filter(c => timestamp() - c._2 < duration).orElse(Some(ts(rg.nextInt(ts.length)), timestamp()))
-  }).get._1
 }
