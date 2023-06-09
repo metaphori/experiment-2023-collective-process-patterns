@@ -37,6 +37,21 @@ Complete version:  `./gradlew runPattern_space_attached_process`
 - Two space-attached processes are spawned. Devices with even ID are instructed to move from the left to right of the arena. 
 - What can be seen is that the process remains located there and only the devices that remain fixed continue to run it.
 
+## Moving process (chat example)
+
+```
+$ ./gradlew runPattern_moving_process
+```
+
+- Notation
+    - Sources of messages: large red dots
+    - Targets of messages: large blue dots
+    - Processes (1 per message): medium-sized colored dots
+    - Nodes: small colored dots (where the color denotes the gradient to the centre)
+- What happens?
+    - From the sources (red dots), the process elongates towards the centre and then towards the destination, building a channel delivering the message to the target.
+    - Once the source gets an ack, it starts a termination of the process, that shrinks from the source until eventually closing.
+
 # More examples
 
 ## Chat 
