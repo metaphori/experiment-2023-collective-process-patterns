@@ -19,6 +19,9 @@ class MovingProcess extends SimulatedAggregateProgram {
 
   def chatProcessLogic(msg: Pid)
                       (args: ChatArgs): (String, Status) = {
+    node.put("source", mid() == msg.from)
+    node.put("target", mid() == msg.to)
+
     val inPathFromSrcToCentre = msg.from==mid() | includingSelf.anyHood {
       nbr(args.parentToCentre) == mid()
     }
@@ -55,7 +58,7 @@ class MovingProcess extends SimulatedAggregateProgram {
 
     if(!maps.isEmpty) {
       node.put("pid", Math.abs(maps.maxBy(_._1.to)._1.hashCode()) % 100)
-    } else { removeMolecule("pid"); }
+    } else { removeMolecule("pid"); removeMolecule("source"); removeMolecule("target"); }
 
     node.put("pids", maps.keySet)
     node.put("numPids", maps.size)
