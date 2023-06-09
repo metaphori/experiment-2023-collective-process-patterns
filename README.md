@@ -1,5 +1,33 @@
 # Patterns of Decentralised Collective Processes
 
+To see the tasks that can be launched: run `./gradlew tasks`
+
+## Event triggering
+
+```bash
+$ ./gradlew runPattern_event_triggering
+```
+
+- Devices are dots, and lines denote neighbouring relationships.
+- Event detectors are denoted as empty squares around
+    - The square turns black-filled once an event has been detected 
+- Event handlers are denoted as blue squares
+    - Large blue ovals denote that a device is handling an event
+- Reporting is denoted by small green shadows
+- Larger colored shadows denote handling process instances
+
+## Prolonged termination
+
+```bash
+$ ./gradlew runPattern_prolonged_termination
+```
+
+## Node-attached process
+
+Run: `./gradlew runPattern_node_attached_process`
+
+- You should see a red node that moves from the bottom to the top of the arena, and colored bubble (the node-attached process) that follows it.
+
 ## Space-attached process
 
 Simple version: `./gradlew runPattern_space_attached_process_simple`
@@ -11,9 +39,13 @@ Complete version:  `./gradlew runPattern_space_attached_process`
 
 # More examples
 
+## Chat 
+
+Run: `./gradlew chat`
+
 ## Multigradient
 
-Run: `/.gradlew runMultigradient`
+Run: `./gradlew runMultigradient`
 
 - You should see that different "bubbles" are created, each one denoting a different gradient process, with a different source and extension. After t=600 all processes should quit.
 - File `src/yaml/multigradient.yml` let you specify in constant `procs` the gradient to be spawned: the map contains entries of the format
