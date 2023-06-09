@@ -16,6 +16,8 @@ class Chat extends SimulatedAggregateProgram {
 
   def chatProcessLogic(msg: Pid)
                       (args: ChatArgs): (String, Status) = {
+    node.put("source", mid() == msg.from)
+    node.put("target", mid() == msg.to)
     val inPathFromSrcToCentre = msg.from==mid() | includingSelf.anyHood {
       nbr(args.parentToCentre) == mid()
     }
@@ -23,7 +25,6 @@ class Chat extends SimulatedAggregateProgram {
     val inPathFromTargetToCentre = args.dependentNodes.contains(msg.to)
     val inRegion = inPathFromSrcToCentre || inPathFromTargetToCentre
     val status: Status = if(gotMsg && mid() == msg.from) Terminated else if (inRegion) { Output } else { External }
-
     (s"${msg.from}->${msg.to}", status)
   }
 
@@ -47,7 +48,7 @@ class Chat extends SimulatedAggregateProgram {
 
     if(!maps.isEmpty) {
       node.put("pid", Math.abs(maps.maxBy(_._1.to)._1.hashCode()) % 100)
-    } else { removeMolecule("pid"); }
+    } else { removeMolecule("pid"); removeMolecule("source"); removeMolecule("target"); }
 
     node.put("pids", maps.keySet)
     node.put("numPids", maps.size)
