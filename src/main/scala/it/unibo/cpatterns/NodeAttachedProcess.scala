@@ -2,7 +2,7 @@ package it.unibo.cpatterns
 
 class NodeAttachedProcess extends SimulatedAggregateProgram {
 
-  /**def removeMolecule(name: String) = if(node.has(name)) node.remove(name)
+  /**
    * This program realises simple spawning of gradient processes.
    * The "difficult" part lies in controlling the processes' lifecycle.
    */

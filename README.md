@@ -52,6 +52,18 @@ $ ./gradlew runPattern_moving_process
     - From the sources (red dots), the process elongates towards the centre and then towards the destination, building a channel delivering the message to the target.
     - Once the source gets an ack, it starts a termination of the process, that shrinks from the source until eventually closing.
 
+## State-based Collective Behaviour 
+
+```
+./gradlew runPattern_statebased_collective_behaviour
+```
+
+- Notation
+    - TODO
+- What happens?
+    - TODO
+
+
 # More examples
 
 ## Chat 
