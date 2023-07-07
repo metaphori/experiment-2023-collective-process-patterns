@@ -63,6 +63,8 @@ deployments:
       concentration: 0
     - molecule: procs
       concentration: *procs
+    - molecule: connection_range
+      concentration: *connectionRange
 
 export:
   - type: CSVExporter

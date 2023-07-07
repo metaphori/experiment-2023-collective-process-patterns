@@ -76,6 +76,31 @@ trait SimulatedAggregateProgram extends AggregateProgram
   }
   */
 
+  /*
+  FIX SPAWN To properly handle removal of exports
+   */
+  override def spawn[K, A, R](process: K => A => (R, Boolean), params: Set[K], args: A): Map[K, R] = {
+    rep(Map.empty[K, R]) { case map => {
+      // 1. Take active process instances from my neighbours
+      val nbrProcs = includingSelf.unionHoodSet(nbr {
+        map
+      }.keySet)
+
+      // 2. New processes to be spawn, based on a generation condition
+      val newProcs = params
+
+      // 3. Collect all process instances to be executed, execute them and update their state
+      (nbrProcs ++ newProcs)
+        .mapToValues { k =>
+          vm.newExportStack
+          val result = align(k)(process(_)(args))
+          if(result._2) vm.mergeExport else vm.discardExport
+          result
+        }.collect { case (pid, res) if res._2 => pid -> res._1 }.toMap
+    }
+    }
+  }
+
   def gossip[T](value: T, combine: (T,T) => T) = rep(value)(curr => foldhood(curr)(combine){ nbr(value) })
 
   def chooseOneAndKeep[T](rg: RandomGenerator, ts: T*): T = rep(Option.empty[T])(chosen => {

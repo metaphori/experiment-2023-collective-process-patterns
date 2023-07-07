@@ -331,19 +331,19 @@
     "size": {
       "max": 100,
       "min": 0,
-      "val": 30
+      "val": 14
     },
     "molFilter": true,
-    "molString": "target",
+    "molString": "state",
     "molPropertyFilter": true,
     "property": "",
     "writingPropertyValue": false,
-    "c": "ALPHA",
+    "c": "HUE",
     "reverse": false,
     "propoom": {
       "max": 10,
       "min": -10,
-      "val": 0
+      "val": -1
     },
     "minprop": {
       "max": 10,
@@ -353,7 +353,7 @@
     "maxprop": {
       "max": 10,
       "min": -10,
-      "val": 1
+      "val": 10
     },
     "colorCache": {
       "value": -16776961
