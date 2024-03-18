@@ -162,3 +162,4 @@ makeTest(name="hello", file = "casestudy", time = 10000.0, vars = setOf(), taskS
 makeTest(name="channel", file = "channel", effects =  "channel.aes")
 makeTest(name="procs", file = "test_aggregate_processes", time = 120.0, vars = setOf("random"), taskSize = 1500)
 makeTest(name="aprocs", file = "test_aggregate_processes", taskSize = 1500, effects="test_aggregate_processes.aes")
+makeTest(name="replicated", file = "pattern_time_replication", time = 500.0, vars = setOf("random"), taskSize = 1500)
