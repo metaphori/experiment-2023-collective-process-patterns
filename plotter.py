@@ -330,6 +330,7 @@ configs = contents.keys() # List of configs, where each config is an N-dim tuple
 
 for nf, pformat in enumerate(the_plots_formats):
   c = copy.deepcopy(contents)
+  print(nf, sampling, sampling[nf])
   if nf in sampling and sampling[nf] == True:
     print(str(nf) + " is to be sampled")
     sconfigs = group_by_varying_values_of(sampling_dim[nf], configs)

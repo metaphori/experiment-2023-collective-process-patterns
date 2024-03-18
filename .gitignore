@@ -20,3 +20,5 @@ target
 
 .sims
 venv
+.metals/
+plots/figs/

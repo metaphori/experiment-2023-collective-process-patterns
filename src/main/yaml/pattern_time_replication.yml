@@ -8,17 +8,17 @@ variables:
     default: 2
 
 _constants:
-  connectionRange: &connectionRange 100
-  retentionTime: &retentionTime 2.0
+  connectionRange: &connectionRange 75
+  retentionTime: &retentionTime 2.5
   programRateMax: &programRateMin 1.0
   programRateMin: &programRateMax 1.5
 #  movementRate: &movementRate 10.0
 #  movementSpeed: &movementSpeed 50.0
-  exportInterval: &exportInterval 3.0
+  exportInterval: &exportInterval 1.0
   sources: &sources "scala.collection.Map(0 -> (0,100), 19 -> (100,10000))"
 # format of map entries is: deviceId -> (sourceFromTime, sourceToTime)
   replication_interval: &replication_interval 20.0
-  number_of_replica: &number_of_replica 5
+  number_of_replica: &number_of_replica 3
 
 environment:
   type: Continuous2DEnvironment
@@ -34,10 +34,10 @@ network-model:
 
 _reactions:
   - program: &program
-      - time-distribution:
-          type: ExponentialTime # RandomDiracComb # ExponentialTime
+      - time-distribution: 1.0
+          # type: ExponentialTime # RandomDiracComb # ExponentialTime
           # NB: the interplay between extreme asynchronicity and retention may cause process re-entrance, i.e., failure in process termination
-          parameters: *programRateMin # [*programRateMin, *programRateMax] # *programRate
+          #parameters: *programRateMin # [*programRateMin, *programRateMax] # *programRate
         type: Event
         actions:
           - type: RunScafiProgram
@@ -46,19 +46,14 @@ _reactions:
 
 deployments:
   type: Grid
-  parameters: [0, 0, 1000, 250, 50, 50, 5, 5]
+  # Parameters: [rows, cols, width, height, stepx, stepy, offsetx, offsety]
+  parameters: [0, 0, 1000, 250, 20, 20, 50, 50]
   properties:
     - type: Pedestrian
   programs:
 #    - *move
     - *program
   contents:
-    - molecule: test
-      concentration: true
-    - molecule: g
-      concentration: Double.PositiveInfinity
-    - molecule: numPids
-      concentration: 0
     - molecule: sources
       concentration: *sources
     - molecule: replication_interval
@@ -76,8 +71,14 @@ export:
     data:
       - time
       - molecule: gvalue
-        aggregators: [ avg ]
+        aggregators: [ mean ]
         value-filter: onlyfinite
       - molecule: rgvalue
-        aggregators: [ avg ]
+        aggregators: [ mean ]
+        value-filter: onlyfinite
+      - molecule: gvalue_err
+        aggregators: [ sum, mean, min, max ]
+        value-filter: onlyfinite
+      - molecule: rgvalue_err
+        aggregators: [ sum, mean, min, max ]
         value-filter: onlyfinite

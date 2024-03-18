@@ -1,0 +1,4 @@
+python plotter.py plots/plot.yml data/ .*csv rescue_vector plots/
+./showImgs.sh plots/ rescue 2 rescue
+
+python3 plotter.py plots/plot_replicated.yml build/exports/patterns/time-replication/ .*txt replicated plots/figs

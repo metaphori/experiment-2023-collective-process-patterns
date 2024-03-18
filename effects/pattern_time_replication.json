@@ -126,7 +126,7 @@
     "red": {
       "max": 255,
       "min": 0,
-      "val": 247
+      "val": 255
     },
     "blue": {
       "max": 255,
@@ -155,7 +155,7 @@
     },
     "molFilter": true,
     "molString": "rgvalue",
-    "molPropertyFilter": false,
+    "molPropertyFilter": true,
     "property": "",
     "writingPropertyValue": false,
     "c": "ALPHA",
@@ -176,7 +176,7 @@
       "val": 10
     },
     "colorCache": {
-      "value": -589824
+      "value": -65536
     }
   },
   {
