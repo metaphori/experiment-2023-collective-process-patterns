@@ -1,6 +1,38 @@
 # Patterns of Decentralised Collective Processes
 
-To see the tasks that can be launched: run `./gradlew tasks`
+This repository contains the code and build infrastructure for the simulations of the paper 
+"System-Wide IoT Design and Programming: Patterns for Decentralised Collective Processes" 
+(submitted to a journal).
+
+## Requirements
+
+- A [Gradle-compatible Java version](https://docs.gradle.org/current/userguide/compatibility.html) e.g., [temurin](https://adoptium.net/temurin/releases/)
+- A local installation of [Git](https://git-scm.com/)
+- [Optional] A working version of Python 3 for the plotting part
+
+## Getting started
+
+1. Check requirements:
+```
+java -version
+git --version
+```
+2. Clone the repository: `git clone https://github.com/nicolasfara/experiments-modularization-framework.git && cd experiments-modularization-framework`. 
+Now you are ready to launch Alchemist & ScaFi simulations
+3. To see the tasks that can be launched: run `./gradlew tasks`
+4. See the next sections for reproducing the simulations associated to specific patterns illustrated in the paper.
+
+<!--
+## Executing simulations
+
+```
+java 
+  -classpath ./build/classes/scala/main:./build/resources/main:~/.gradle/caches/modules-2/files-2.1/it.unibo.alchemist/alchemist/25.12.0/bc713208ced9b147d6a41ea346c1fbd2ef10b90f/alchemist-25.12.0.jar:... it.unibo.alchemist.Alchemist -y src/main/yaml/pattern_event_triggering.yml -g src/main/resources/pattern-event-triggering.json
+```
+-->
+
+# Reproducing the simulations / patterns
+
 
 ## Event triggering
 
@@ -10,7 +42,7 @@ $ ./gradlew runPattern_event_triggering
 
 - Devices are dots, and lines denote neighbouring relationships.
 - Event detectors are denoted as empty squares around
-    - The square turns black-filled once an event has been detected 
+    - The square turns black-filled once an event has been detected
 - Event handlers are denoted as blue squares
     - Large blue ovals denote that a device is handling an event
 - Reporting is denoted by small green shadows
@@ -34,7 +66,7 @@ Simple version: `./gradlew runPattern_space_attached_process_simple`
 
 Complete version:  `./gradlew runPattern_space_attached_process`
 
-- Two space-attached processes are spawned. Devices with even ID are instructed to move from the left to right of the arena. 
+- Two space-attached processes are spawned. Devices with even ID are instructed to move from the left to right of the arena.
 - What can be seen is that the process remains located there and only the devices that remain fixed continue to run it.
 
 ## Moving process (chat example)
@@ -52,7 +84,7 @@ $ ./gradlew runPattern_moving_process
     - From the sources (red dots), the process elongates towards the centre and then towards the destination, building a channel delivering the message to the target.
     - Once the source gets an ack, it starts a termination of the process, that shrinks from the source until eventually closing.
 
-## State-based Collective Behaviour 
+## State-based Collective Behaviour
 
 ```
 ./gradlew runPattern_statebased_collective_behaviour
@@ -66,7 +98,7 @@ $ ./gradlew runPattern_moving_process
 
 # More examples
 
-## Chat 
+## Chat
 
 Run: `./gradlew chat`
 
@@ -94,29 +126,6 @@ Tasks/patterns:
 
 - `runPattern_event_triggering`
 - `runPattern_prolonged_termination`
-
-## Requirements
-
-- A [Gradle-compatible Java version](https://docs.gradle.org/current/userguide/compatibility.html) e.g., [temurin](https://adoptium.net/temurin/releases/)
-- A local installation of [Git](https://git-scm.com/)
-- [Optional] A working version of Python 3 for the plotting part
-
-**Check if it works** 
-
-Open a terminal and type
-```
-java -version
-git --version
-```
-
-Now you are ready to launch Alchemist & ScaFi simulations
-
-## Executing simulations
-
-```
-java 
-  -classpath ./build/classes/scala/main:./build/resources/main:~/.gradle/caches/modules-2/files-2.1/it.unibo.alchemist/alchemist/25.12.0/bc713208ced9b147d6a41ea346c1fbd2ef10b90f/alchemist-25.12.0.jar:... it.unibo.alchemist.Alchemist -y src/main/yaml/pattern_event_triggering.yml -g src/main/resources/pattern-event-triggering.json
-```
 
 # Guide
 
