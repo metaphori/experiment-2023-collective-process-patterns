@@ -8,14 +8,14 @@ variables:
     default: 2
 
 _constants:
-  connectionRange: &connectionRange 75
+  connectionRange: &connectionRange 50
   retentionTime: &retentionTime 2.5
   programRateMax: &programRateMin 1.0
   programRateMin: &programRateMax 1.5
 #  movementRate: &movementRate 10.0
 #  movementSpeed: &movementSpeed 50.0
   exportInterval: &exportInterval 1.0
-  sources: &sources "scala.collection.Map(0 -> (0,100), 19 -> (100,10000))"
+  sources: &sources "scala.collection.Map(0 -> (0,100), 649 -> (100,10000))"
 # format of map entries is: deviceId -> (sourceFromTime, sourceToTime)
   replication_interval: &replication_interval 20.0
   number_of_replica: &number_of_replica 3

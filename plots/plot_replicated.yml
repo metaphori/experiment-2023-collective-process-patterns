@@ -4,9 +4,15 @@ the_plots_labels:
   - 'g (classic)'
   - 'g (replicated)'
   - 'g (classic) cumulative error'
+  - 'g (classic) mean error'
+  - 'g (classic) min error'
+  - 'g (classic) max error'
   - 'g (replicated) cumulative error'
+  - 'g (replicated) mean error'
+  - 'g (replicated) min error'
+  - 'g (replicated) max error'
 the_plots_formats:
-  - [0,3,4]
+  - [0,8,4]
   #- [0,11,12,13]
 #  - [0,2,3,4,5]
 #y_labels: ['# of requests', '# of requests','','% of utilization of workers']
@@ -14,12 +20,15 @@ the_plots_formats:
 #  - errors
 line_widths:
   - [2,2,2,2,2,2,2,2,2,2,2]
-default_colors: &default_colors ["black", "red", "green", "red", "purple"]
+default_colors: &default_colors ["black", "red", "green", "red", "blue", "black", "brown", "blue", "red", "purple", "orange"]
+# dashed lines
+line_styles:
+  - ["solid", "solid", "solid", "dashed", "dashed", "dashed", "dashed", "solid", "solid", "solid", "solid"]
 the_plots_colors:
   - *default_colors
 legend_position:
-  - "lower right"
-  - "lower right"
+  - "upper right"
+  - "upper right"
 legend_size: 12
 force_limit_plot_y: 150
 #   3: 1000

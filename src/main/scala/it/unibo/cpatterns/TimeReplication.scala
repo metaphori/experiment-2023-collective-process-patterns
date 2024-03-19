@@ -37,7 +37,7 @@ class TimeReplication extends SimulatedAggregateProgram with BlockT {
   def replicated[A,R](proc: A=>R)(argument:A, p:Long, k:Int) = {
     val lastPid = the_clock(p, alchemistDeltaTime().toLong)
     node.put("clock (lastpid)", f"${lastPid} ${alchemistDeltaTime().toLong}")
-    spawn[Long,A,R](pid => arg => (proc(arg), pid + k > lastPid),
+    spawn[Long,A,R](pid => arg => (proc(arg), pid > lastPid-k),
       Set(lastPid), argument)
   } // returns Map[Long,R] from replicate IDs to corresp. values
 

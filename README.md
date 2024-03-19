@@ -54,6 +54,30 @@ $ ./gradlew runPattern_event_triggering
 $ ./gradlew runPattern_prolonged_termination
 ```
 
+## Time replication
+
+Execution of the graphical scenario:
+
+```bash
+./gradlew runPattern_time_replication
+```
+
+- **What to expect**: a gradient is built from the source (black dot) at the left of the arena.
+    Then, at `t=100`, the source switches to the opposite area of the arena. So, the gradient must adjust.
+    We can see that it is fast to adapt in the right half (where values need to drop), but it is slower to adapt in the left half (where values need to rise).
+    However, we see the internal coloured circle that adjusts abruptly (due to gradient replication), whereas the outer circle takes a lot of time to adjust
+    (due to the raising problem of the classic gradient).
+
+Reproducing data and plots
+
+```bash
+./gradlew replicated
+python3 plotter.py plots/plot_replicated.yml build/exports/patterns/time-replication/ .*txt replicated plots/figs
+```
+
+- Here we plot the mean error of the gradient value for the two algorithms, showing the dynamics illustrated above for the graphical scenario.
+  Results are averaged for 6 different random seeds.
+
 ## Node-attached process
 
 Run: `./gradlew runPattern_node_attached_process`
