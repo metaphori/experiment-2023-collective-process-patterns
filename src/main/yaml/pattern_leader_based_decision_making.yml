@@ -1,0 +1,103 @@
+incarnation: scafi
+
+variables:
+  random: &random
+    min: 0
+    max: 5
+    step: 1
+    default: 2
+  gstep: &gstep
+    language: scala
+    formula: 100L
+  offset: &offset
+    language: scala
+    formula: 50L
+  nodeSide: &nodeSide
+    language: scala
+    formula: gstep.asInstanceOf[Long] * 20
+  totalNodes:
+    language: scala
+    formula: Math.pow(nodeSide.asInstanceOf[Long], 2).toLong - 1
+
+_constants:
+  connectionRange: &connectionRange 125.0
+  retentionTime: &retentionTime 2.5
+  programRateMax: &programRateMin 1.0
+  programRateMin: &programRateMax 1.5
+#  movementRate: &movementRate 10.0
+#  movementSpeed: &movementSpeed 50.0
+  exportInterval: &exportInterval 1.0
+  sources: &sources "scala.collection.Map(0 -> (0,100), 649 -> (100,10000))"
+# format of map entries is: deviceId -> (sourceFromTime, sourceToTime)
+  replication_interval: &replication_interval 20.0
+  number_of_replica: &number_of_replica 3
+
+environment:
+  type: Continuous2DEnvironment
+  parameters: []
+#  global-programs:
+#    - time-distribution:
+#        type: Trigger
+#        parameters: [ 0 ]
+#      type: SetupNode
+#      parameters: [ ]
+
+
+seeds:
+  scenario: *random
+  simulation: *random
+
+network-model:
+  type: ConnectWithinDistance
+  parameters: [*connectionRange]
+
+_reactions:
+  - program: &program
+      - time-distribution: 1.0
+          # type: ExponentialTime # RandomDiracComb # ExponentialTime
+          # NB: the interplay between extreme asynchronicity and retention may cause process re-entrance, i.e., failure in process termination
+          #parameters: *programRateMin # [*programRateMin, *programRateMax] # *programRate
+        type: Event
+        actions:
+          - type: RunScafiProgram
+            parameters: [it.unibo.cpatterns.LeaderBasedDecisionMaking, *retentionTime]
+      - program: send
+
+deployments:
+  type: Grid
+  # Parameters: [rows, cols, width, height, stepx, stepy, offsetx, offsety]
+  parameters: [0, 0, *nodeSide, *nodeSide, *gstep, *gstep, *offset, *offset]
+  properties:
+    - type: Pedestrian
+  programs:
+#    - *move
+    - *program
+  contents:
+    - molecule: sources
+      concentration: *sources
+    - molecule: replication_interval
+      concentration: *replication_interval
+    - molecule: number_of_replica
+      concentration: *number_of_replica
+
+export:
+  - type: CSVExporter
+    parameters:
+      fileNameRoot: "experiment"
+      exportPath: "build/exports/patterns/leader-based-decision-making"
+      fileExtension: "txt"
+      interval: *exportInterval
+    data:
+      - time
+      - molecule: gvalue
+        aggregators: [ mean ]
+        value-filter: onlyfinite
+      - molecule: rgvalue
+        aggregators: [ mean ]
+        value-filter: onlyfinite
+      - molecule: gvalue_err
+        aggregators: [ sum, mean, min, max ]
+        value-filter: onlyfinite
+      - molecule: rgvalue_err
+        aggregators: [ sum, mean, min, max ]
+        value-filter: onlyfinite
