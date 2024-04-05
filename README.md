@@ -108,6 +108,17 @@ $ ./gradlew runPattern_moving_process
     - From the sources (red dots), the process elongates towards the centre and then towards the destination, building a channel delivering the message to the target.
     - Once the source gets an ack, it starts a termination of the process, that shrinks from the source until eventually closing.
 
+## Leader-based decision making
+
+```
+./gradlew runPattern_leader_based_decision_making
+```
+
+- Notation
+    - Leaders: large red squares
+- Each node is coloured according to the decision (denoted by an integer) propagated by the leader
+    - For simplicity, the leader's decision is the leader's ID
+
 ## State-based Collective Behaviour
 
 ```
