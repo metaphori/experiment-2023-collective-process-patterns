@@ -14,7 +14,8 @@ _constants:
   movementRate: &movementRate 10.0
   movementSpeed: &movementSpeed 50.0
   exportInterval: &exportInterval 3.0
-  proces: &procs "scala.collection.Map(0 -> (0,50), 20 -> (1,100), 30 -> (390,50), 25 -> (190, 35), 80 -> (380, 85))"
+  proces: &procs "scala.collection.Map(50 -> (5,50,1.0,50), 380 -> (10,100,1.5,20))"
+  # format of map entries is: deviceId -> (sourceFromTime, amountOfResources, kFactor for communicationRadius expansion, numRoundsOfStability)
 
 environment:
   type: Continuous2DEnvironment
@@ -31,7 +32,7 @@ network-model:
 _reactions:
   - program: &program
       - time-distribution:
-          type: ExponentialTime # DiracComb
+          type: DiracComb # ExponentialTime (use it to test for correctness wrt highly dynamic scheduling)
           parameters: *programRate
         type: Event
         actions:

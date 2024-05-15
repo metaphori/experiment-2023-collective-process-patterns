@@ -151,7 +151,7 @@
     "size": {
       "max": 100,
       "min": 0,
-      "val": 7
+      "val": 10
     },
     "molFilter": true,
     "molString": "g",
@@ -211,7 +211,7 @@
     "size": {
       "max": 100,
       "min": 0,
-      "val": 18
+      "val": 30
     },
     "molFilter": true,
     "molString": "pid",
@@ -242,16 +242,16 @@
   {
     "type": "class it.unibo.alchemist.boundary.gui.effects.DrawShape",
     "curIncarnation": "scafi",
-    "mode": "FILL_ELLIPSE",
+    "mode": "FILL_RECTANGLE",
     "red": {
       "max": 255,
       "min": 0,
-      "val": 255
+      "val": 0
     },
     "blue": {
       "max": 255,
       "min": 0,
-      "val": 0
+      "val": 255
     },
     "green": {
       "max": 255,
@@ -271,10 +271,10 @@
     "size": {
       "max": 100,
       "min": 0,
-      "val": 30
+      "val": 22
     },
     "molFilter": true,
-    "molString": "source",
+    "molString": "leader",
     "molPropertyFilter": true,
     "property": "",
     "writingPropertyValue": false,
@@ -296,7 +296,7 @@
       "val": 1
     },
     "colorCache": {
-      "value": -65536
+      "value": -16776961
     }
   },
   {

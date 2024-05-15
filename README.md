@@ -33,28 +33,30 @@ java
 
 # Reproducing the simulations / patterns
 
+## (L) Lifecycle Management (Creational and Destructional) Patterns
 
-## Event triggering
+### Event-based  triggering
 
 ```bash
 $ ./gradlew runPattern_event_triggering
 ```
 
-- Devices are dots, and lines denote neighbouring relationships.
-- Event detectors are denoted as empty squares around
-    - The square turns black-filled once an event has been detected
-- Event handlers are denoted as blue squares
-    - Large blue ovals denote that a device is handling an event
-- Reporting is denoted by small green shadows
-- Larger colored shadows denote handling process instances
+- Notation
+    - Devices are dots, and lines denote neighbouring relationships.
+    - Event detectors are denoted as empty squares around
+        - The square turns black-filled once an event has been detected
+    - Event handlers are denoted as blue squares
+        - Large blue ovals denote that a device is handling an event
+    - Reporting is denoted by small green shadows
+    - Larger colored shadows denote handling process instances
 
-## Prolonged termination
+### Prolonged termination
 
 ```bash
 $ ./gradlew runPattern_prolonged_termination
 ```
 
-## Time replication
+### Time replication
 
 Execution of the graphical scenario:
 
@@ -78,22 +80,59 @@ python3 plotter.py plots/plot_replicated.yml build/exports/patterns/time-replica
 - Here we plot the mean error of the gradient value for the two algorithms, showing the dynamics illustrated above for the graphical scenario.
   Results are averaged for 6 different random seeds.
 
-## Node-attached process
+## (B) Behavioural (Intra-Process Behaviour) Patterns
+
+### Leader-based decision making
+
+```
+./gradlew runPattern_leader_based_decision_making
+```
+
+- Notation
+    - Leaders: large red squares
+- Each node is coloured according to the decision (denoted by an integer) propagated by the leader
+    - For simplicity, the leader's decision is the leader's ID
+
+### State-based Collective Behaviour
+
+```
+./gradlew runPattern_statebased_collective_behaviour
+```
+
+- Notation
+    - Nodes: small colored dots (where the colour denotes the gradient value)
+    - State: the inner circle on the node (larger than a normal dot)
+    - PID: the outer circle on the node (i.e. appearing as the contour of the state circle)
+    - Leader (of a process): blue square
+- What happens?
+    - The goal for the ensemble is to gather a sufficient amount of resources (for simplicity, `1 device = 1 resource`),
+  by expanding the  process area in phases. 
+  A parameter `k` (initially set to 1) is used to denote the 
+  level of expansion (the radius is `k * DISTANCE`, where `DISTANCE` is the max communication range among neighbours).
+  If at the current level of expansion (`MONITORING` state) the leader determines that the number of process members is not enough, 
+  it increments `k` to gather more (and enters the `EXPANSION` state). 
+  If a threshold of member count is exceeded, then the process terminates (`CLOSING` state)).
+
+
+## (M)Mobility patterns
+
+### Node-attached process
 
 Run: `./gradlew runPattern_node_attached_process`
 
-- You should see a red node that moves from the bottom to the top of the arena, and colored bubble (the node-attached process) that follows it.
+- **What to expect**:You should see a red node that moves from the bottom to the top of the arena, and colored bubble (the node-attached process) that follows it.
 
-## Space-attached process
+### Space-attached process
 
 Simple version: `./gradlew runPattern_space_attached_process_simple`
 
 Complete version:  `./gradlew runPattern_space_attached_process`
 
-- Two space-attached processes are spawned. Devices with even ID are instructed to move from the left to right of the arena.
-- What can be seen is that the process remains located there and only the devices that remain fixed continue to run it.
+- **Scenario**: Two space-attached processes are spawned. Devices with even ID are instructed to move from the left to right of the arena.
+- **What to expect**: What can be seen is that the process remains located there and only the devices that remain fixed continue to run it.
 
-## Moving process (chat example)
+
+### Moving process (chat example)
 
 ```
 $ ./gradlew runPattern_moving_process
@@ -107,28 +146,6 @@ $ ./gradlew runPattern_moving_process
 - What happens?
     - From the sources (red dots), the process elongates towards the centre and then towards the destination, building a channel delivering the message to the target.
     - Once the source gets an ack, it starts a termination of the process, that shrinks from the source until eventually closing.
-
-## Leader-based decision making
-
-```
-./gradlew runPattern_leader_based_decision_making
-```
-
-- Notation
-    - Leaders: large red squares
-- Each node is coloured according to the decision (denoted by an integer) propagated by the leader
-    - For simplicity, the leader's decision is the leader's ID
-
-## State-based Collective Behaviour
-
-```
-./gradlew runPattern_statebased_collective_behaviour
-```
-
-- Notation
-    - TODO
-- What happens?
-    - TODO
 
 
 # More examples
