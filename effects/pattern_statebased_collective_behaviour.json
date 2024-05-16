@@ -306,7 +306,7 @@
     "red": {
       "max": 255,
       "min": 0,
-      "val": 0
+      "val": 255
     },
     "blue": {
       "max": 255,
@@ -339,24 +339,24 @@
     "property": "",
     "writingPropertyValue": false,
     "c": "HUE",
-    "reverse": false,
+    "reverse": true,
     "propoom": {
-      "max": 10,
-      "min": -10,
-      "val": -1
-    },
-    "minprop": {
       "max": 10,
       "min": -10,
       "val": 0
     },
+    "minprop": {
+      "max": 10,
+      "min": -10,
+      "val": -10
+    },
     "maxprop": {
       "max": 10,
       "min": -10,
-      "val": 10
+      "val": 5
     },
     "colorCache": {
-      "value": -16776961
+      "value": -65281
     }
   }
 ]

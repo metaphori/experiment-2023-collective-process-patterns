@@ -3,17 +3,17 @@ package it.unibo.cpatterns
 import it.unibo.alchemist.model.scafi.ScafiIncarnationForAlchemist.ID
 
 // NB: do not nest into class of program, otherwise different instances cannot be compared, leading to subtle bugs!
-trait State
+class State(val colour: String = "0")
 object State {
-  case object InitiatingState extends State
+  case object InitiatingState extends State("0")
 
-  case class MonitoringState(k: Int) extends State
+  case class MonitoringState(k: Int) extends State("1")
 
-  case class ExpandingState(k: Int) extends State
+  case class ExpandingState(k: Int) extends State("5")
 
-  case object WorkingState extends State
+  case object WorkingState extends State("4")
 
-  case object ClosingState extends State
+  case object ClosingState extends State("9")
 
   val Initiating: State = InitiatingState
 
@@ -75,7 +75,7 @@ class StateBasedCollectiveBehaviour extends SimulatedAggregateProgram {
           val maxExtension = C[Double, Double](g, Math.max, g, g)
           node.put("leader", leader)
           node.put("max_extension", maxExtension)
-          if(maxExtension >= (k - 1) * pid.distance) (Monitoring(k), k) else (ExpandingState(k), k)
+          if(leader && maxExtension >= (k - 1) * pid.distance) (Monitoring(k), k) else (ExpandingState(k), k)
         }
         case (s @ MonitoringState(k), r) => {
           val g = distanceTo(leader)
@@ -103,7 +103,7 @@ class StateBasedCollectiveBehaviour extends SimulatedAggregateProgram {
           s
         }// do nothing
       }
-      node.put("state", state.hashCode())
+      node.put("state", state.colour)
       // node.put("state_history", state :: node.getOrElse("state_history", List.empty))
       node.put("n", n)
       val withinProcess = state != Closing && g < (n + 1) * pid.distance
