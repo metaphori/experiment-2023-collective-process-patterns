@@ -78,7 +78,6 @@ class StateBasedCollectiveBehaviour extends SimulatedAggregateProgram {
           if(leader && maxExtension >= (k - 1) * pid.distance) (Monitoring(k), k) else (ExpandingState(k), k)
         }
         case (s @ MonitoringState(k), r) => {
-          val g = distanceTo(leader)
           node.put("nbrs", foldhood[Set[Int]](Set.empty)(_++_){ nbr(Set(mid()))})
           val countMembers = C[Double,Int](g, _ + _, 1, 0)  // TODO: count is not fine!
           // When the counting of members stabilises, then start counting rounds; then, move to "Closing" as soon as the counting exceeds a threshold
