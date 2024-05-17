@@ -17,7 +17,7 @@ This repository contains the code and build infrastructure for the simulations o
 java -version
 git --version
 ```
-2. Clone the repository: `git clone https://github.com/nicolasfara/experiments-modularization-framework.git && cd experiments-modularization-framework`. 
+2. Clone the repository: `git clone https://github.com/metaphori/experiment-2023-collective-process-patterns && cd experiment-2023-collective-process-patterns`. 
 Now you are ready to launch Alchemist & ScaFi simulations
 3. To see the tasks that can be launched: run `./gradlew tasks`
 4. See the next sections for reproducing the simulations associated to specific patterns illustrated in the paper.
